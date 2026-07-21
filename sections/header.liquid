@@ -2,33 +2,89 @@
 
   <div class="container">
 
-    <a href="/" class="logo">
-      NOVE
+    <!-- Mobile Menu Button -->
+    <button
+      class="menu-toggle"
+      id="menu-toggle"
+      aria-label="Open navigation">
+
+      ☰
+
+    </button>
+
+    <!-- Logo -->
+    <a href="{{ routes.root_url }}" class="logo">
+
+      {% if section.settings.logo %}
+
+        {{
+          section.settings.logo
+          | image_url: width: 240
+          | image_tag:
+            alt: shop.name,
+            loading: 'eager'
+        }}
+
+      {% else %}
+
+        {{ shop.name }}
+
+      {% endif %}
+
     </a>
 
-    <nav class="nav">
+    <!-- Desktop Navigation -->
+    <nav class="nav" aria-label="Main Navigation">
 
-      <a href="#">Shop</a>
+      {% if section.settings.menu != blank %}
 
-      <a href="#">Makeup</a>
+        {% for link in section.settings.menu.links %}
 
-      <a href="#">Skincare</a>
+          <a href="{{ link.url }}">
+            {{ link.title }}
+          </a>
 
-      <a href="#">Hair</a>
+        {% endfor %}
 
-      <a href="#">Fragrance</a>
-
-      <a href="#">Sale</a>
+      {% endif %}
 
     </nav>
 
+    <!-- Header Actions -->
     <div class="header-actions">
 
-      <button aria-label="Search">🔍</button>
+      <a
+        href="{{ routes.search_url }}"
+        class="icon-btn"
+        aria-label="Search">
 
-      <button aria-label="Account">👤</button>
+        Search
 
-      <button aria-label="Cart">🛍️</button>
+      </a>
+
+      <a
+        href="{{ routes.account_url }}"
+        class="icon-btn"
+        aria-label="Account">
+
+        Account
+
+      </a>
+
+      <a
+        href="{{ routes.cart_url }}"
+        class="icon-btn"
+        aria-label="Cart">
+
+        Cart
+
+        {% if cart.item_count > 0 %}
+          <span class="cart-count">
+            {{ cart.item_count }}
+          </span>
+        {% endif %}
+
+      </a>
 
     </div>
 
@@ -36,9 +92,55 @@
 
 </header>
 
+<!-- Mobile Navigation -->
+
+<div
+  class="mobile-menu"
+  id="mobile-menu">
+
+  <button
+    class="close-menu"
+    id="close-menu"
+    aria-label="Close navigation">
+
+    ✕
+
+  </button>
+
+  <nav aria-label="Mobile Navigation">
+
+    {% if section.settings.menu != blank %}
+
+      {% for link in section.settings.menu.links %}
+
+        <a href="{{ link.url }}">
+          {{ link.title }}
+        </a>
+
+      {% endfor %}
+
+    {% endif %}
+
+  </nav>
+
+</div>
+
 {% schema %}
 {
   "name": "Header",
-  "settings": []
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu",
+      "default": "main-menu"
+    }
+  ]
 }
 {% endschema %}

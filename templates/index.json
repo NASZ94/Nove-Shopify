@@ -1,5 +1,8 @@
 {
   "sections": {
+    "announcement": {
+      "type": "announcement-bar"
+    },
     "hero": {
       "type": "hero"
     },
@@ -14,6 +17,7 @@
     }
   },
   "order": [
+    "announcement",
     "hero",
     "categories",
     "best_sellers",

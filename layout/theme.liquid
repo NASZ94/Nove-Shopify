@@ -1,13 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ request.locale.iso_code }}">
 <head>
 
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>
     {{ page_title }}
   </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
 
   {{ content_for_header }}
 
@@ -18,9 +22,11 @@
 
 <body>
 
+  {% section 'announcement-bar' %}
+
   {% section 'header' %}
 
-  <main>
+  <main id="MainContent">
     {{ content_for_layout }}
   </main>
 

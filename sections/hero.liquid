@@ -1,20 +1,44 @@
 <section class="hero">
 
-  <div class="hero-content">
+  <div class="container hero-grid">
 
-    <span class="eyebrow">
-      NEW COLLECTION
-    </span>
+    <div class="hero-content">
 
-    <h1>Beauty, Naturally.</h1>
+      <span class="eyebrow">
+        {{ section.settings.eyebrow }}
+      </span>
 
-    <p>
-      Premium skincare and makeup crafted to elevate your everyday ritual.
-    </p>
+      <h1>
+        {{ section.settings.heading }}
+      </h1>
 
-    <a class="btn" href="#">
-      Shop Collection
-    </a>
+      <p>
+        {{ section.settings.text }}
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="{{ section.settings.button_link }}" class="btn">
+          {{ section.settings.button_label }}
+        </a>
+
+        <a href="/collections/all" class="btn btn-secondary">
+          Explore
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="hero-image">
+
+      {% if section.settings.image %}
+        {{ section.settings.image | image_url: width: 900 | image_tag }}
+      {% else %}
+        <img src="https://placehold.co/700x800" alt="Beauty Collection">
+      {% endif %}
+
+    </div>
 
   </div>
 
@@ -23,7 +47,42 @@
 {% schema %}
 {
   "name": "Hero",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "NEW COLLECTION"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Beauty, Naturally."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Discover skincare, makeup, and beauty essentials designed for every routine."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    }
+  ],
   "presets": [
     {
       "name": "Hero"
