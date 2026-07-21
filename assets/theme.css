@@ -1149,26 +1149,36 @@ button{
 }
 
 .wishlist-button{
-    width:52px;
-    height:52px;
+    position:absolute;
+    top:16px;
+    right:16px;
+    z-index:10;
+
+    width:44px;
+    height:44px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    border:1px solid #ddd;
-    border-radius:8px;
-    background:#fff;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(255,255,255,.95);
+    box-shadow:0 4px 12px rgba(0,0,0,.12);
+
     cursor:pointer;
-    font-size:24px;
-    transition:.2s ease;
+    font-size:22px;
+
+    transition:.25s ease;
 }
 
 .wishlist-button:hover{
-    background:#f7f7f7;
+    transform:scale(1.08);
 }
 
 .wishlist-button.active{
     color:#e63946;
-    border-color:#e63946;
 }
 
 /* ==========================================
