@@ -1,0 +1,324 @@
+{% paginate collection.products by section.settings.products_per_page %}
+
+<section class="collection-page">
+
+    <div class="page-width">
+
+        <header class="collection-header">
+
+            <h1>{{ collection.title }}</h1>
+
+            {% if section.settings.show_collection_description and collection.description != blank %}
+
+                <div class="collection-description">
+
+                    {{ collection.description }}
+
+                </div>
+
+            {% endif %}
+
+        </header>
+
+        <div class="collection-toolbar">
+
+            {% if section.settings.show_product_count %}
+
+                <p class="collection-count">
+
+                    {{ collection.products_count }}
+                    {% if collection.products_count == 1 %}
+                        Product
+                    {% else %}
+                        Products
+                    {% endif %}
+
+                </p>
+
+            {% endif %}
+
+            {% if section.settings.show_sort %}
+
+                <form id="CollectionSortForm">
+
+                    <label for="SortBy" class="visually-hidden">
+                        Sort By
+                    </label>
+
+                    <select id="SortBy" name="sort_by">
+
+                        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+                        {% for option in collection.sort_options %}
+
+                            <option
+                                value="{{ option.value }}"
+                                {% if option.value == sort_by %}
+                                    selected
+                                {% endif %}
+                            >
+
+                                {{ option.name }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </form>
+
+            {% endif %}
+
+        </div>
+
+        <div class="collection-layout">
+
+            {% if section.settings.show_filters %}
+
+                <button
+                    type="button"
+                    id="FilterToggle"
+                    class="button filter-toggle"
+                    aria-expanded="false">
+
+                    Filters
+
+                </button>
+
+                <aside
+                    id="CollectionSidebar"
+                    class="collection-sidebar">
+
+                    {% render 'facets',
+                        results: collection,
+                        enable_filtering: true,
+                        enable_sorting: false
+                    %}
+
+                </aside>
+
+            {% endif %}
+
+            <div class="collection-products">
+
+                {% if collection.products_count > 0 %}
+
+                    <div class="product-grid">
+
+                        {% for product in collection.products %}
+
+                            <article class="product-card">
+
+                                <button
+                                    class="wishlist-button"
+                                    data-product-handle="{{ product.handle }}"
+                                    aria-label="Add to wishlist"
+                                    aria-pressed="false"
+                                    type="button">
+
+                                    ♡
+
+                                </button>
+
+                               <a
+                                    href="{{ product.url }}"
+                                    class="product-card-image">
+
+                                    {% if product.compare_at_price > product.price %}
+
+                                        <span class="product-badge">
+
+                                            Sale
+
+                                        </span>
+
+                                     {% endif %}
+
+                                     {% if product.featured_image %}
+
+                                         <div class="product-card-image-wrapper">
+
+                                             {{
+                                                 product.featured_image
+                                                 | image_url: width: 700
+                                                 | image_tag:
+                                                     class: 'product-image-primary',
+                                                     loading: 'lazy',
+                                                     alt: product.featured_image.alt | default: product.title
+                                             }}
+
+                                             {% if product.images.size > 1 %}
+
+                                                 {{
+                                                     product.images[1]
+                                                     | image_url: width: 700
+                                                     | image_tag:
+                                                         class: 'product-image-secondary',
+                                                         loading: 'lazy',
+                                                         alt: product.images[1].alt | default: product.title
+                                                 }}
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% else %}
+
+                                        {{ 'product-1' | placeholder_svg_tag }}
+
+                                    {% endif %}
+
+                                </a>
+
+                                <div class="product-card-content">
+
+                                    <p class="product-vendor">
+
+                                        {{ product.vendor }}
+
+                                    </p>
+
+                                    <h3 class="product-title">
+
+                                        <a href="{{ product.url }}">
+
+                                            {{ product.title }}
+
+                                        </a>
+
+                                    </h3>
+
+                                    <div class="product-price">
+
+                                        {% if product.compare_at_price > product.price %}
+
+                                            <span class="sale-price">
+
+                                                {{ product.price | money }}
+
+                                            </span>
+
+                                            <span class="compare-price">
+
+                                                {{ product.compare_at_price | money }}
+
+                                            </span>
+
+                                        {% else %}
+
+                                            <span>
+
+                                                {{ product.price | money }}
+
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                    <div class="product-card-actions">
+
+                                        <button
+                                            type="button"
+                                            class="button quick-view-button"
+                                            data-product-handle="{{ product.handle }}">
+
+                                            Quick View
+
+                                        </button>
+
+                                        <a
+                                            href="{{ product.url }}"
+                                            class="button button-secondary">
+
+                                            View Product
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="collection-empty">
+
+                        <h2>No products found</h2>
+
+                        <p>
+
+                            Try removing some filters or browse another collection.
+
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+                {% if paginate.pages > 1 %}
+
+                    <nav class="pagination">
+
+                        {{ paginate | default_pagination }}
+
+                    </nav>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Main Collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Show sort dropdown",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show filters",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

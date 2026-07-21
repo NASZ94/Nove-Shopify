@@ -1,0 +1,70 @@
+
+<div id="CartDrawer" class="cart-drawer">
+
+  <div class="cart-drawer-overlay"></div>
+
+  <aside class="cart-panel">
+
+    <div class="cart-header">
+
+      <h2>Your Cart</h2>
+
+      <button
+        type="button"
+        id="CloseCart"
+        class="close-cart"
+        aria-label="Close cart">
+
+        ×
+
+      </button>
+
+    </div>
+
+    <div id="CartDrawerItems" class="cart-items">
+
+      <p class="cart-empty">
+        Your cart is empty.
+      </p>
+
+    </div>
+
+    <div class="cart-footer">
+
+      <div class="cart-total">
+
+        <span>Subtotal</span>
+
+        <span id="CartSubtotal">$0.00</span>
+
+      </div>
+
+      <a
+        href="{{ routes.cart_url }}"
+        class="btn">
+
+        View Cart
+
+      </a>
+
+      <button
+        id="CheckoutButton"
+        class="btn btn-secondary"
+        onclick="window.location='{{ routes.checkout_url }}'">
+
+        Checkout
+
+      </button>
+
+    </div>
+
+  </aside>
+
+</div>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": []
+}
+{% endschema %}

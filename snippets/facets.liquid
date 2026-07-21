@@ -1,0 +1,110 @@
+{% if enable_filtering %}
+
+<div class="collection-filters">
+
+    <form id="FacetFiltersForm">
+
+        {% for filter in results.filters %}
+
+            <details class="filter-group">
+
+                <summary>
+
+                    {{ filter.label }}
+
+                </summary>
+
+                <div class="filter-options">
+
+                    {% case filter.type %}
+
+                        {% when 'list' %}
+
+                            {% for value in filter.values %}
+
+                                <label class="filter-option">
+
+                                    <input
+                                        type="checkbox"
+                                        name="{{ value.param_name }}"
+                                        value="{{ value.value }}"
+                                        {% if value.active %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+                                    <span>
+
+                                        {{ value.label }}
+
+                                        ({{ value.count }})
+
+                                    </span>
+
+                                </label>
+
+                            {% endfor %}
+
+                        {% when 'boolean' %}
+
+                            <label class="filter-option">
+
+                                <input
+                                    type="checkbox"
+                                    name="{{ filter.true_value.param_name }}"
+                                    value="{{ filter.true_value.value }}"
+                                    {% if filter.true_value.active %}
+                                        checked
+                                    {% endif %}
+                                >
+
+                                <span>
+
+                                    {{ filter.true_value.label }}
+
+                                </span>
+
+                            </label>
+
+                        {% when 'price_range' %}
+
+                            <div class="price-range">
+
+                                <input
+                                    type="number"
+                                    name="{{ filter.min_value.param_name }}"
+                                    value="{{ filter.min_value.value.value }}"
+                                    placeholder="Min"
+                                >
+
+                                <input
+                                    type="number"
+                                    name="{{ filter.max_value.param_name }}"
+                                    value="{{ filter.max_value.value.value }}"
+                                    placeholder="Max"
+                                >
+
+                            </div>
+
+                    {% endcase %}
+
+                </div>
+
+            </details>
+
+        {% endfor %}
+
+        <button
+            type="submit"
+            class="button"
+        >
+
+            Apply Filters
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endif %}

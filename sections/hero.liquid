@@ -4,38 +4,79 @@
 
     <div class="hero-content">
 
-      <span class="eyebrow">
-        {{ section.settings.eyebrow }}
-      </span>
+      {% if section.settings.eyebrow != blank %}
+        <span class="eyebrow">
+          {{ section.settings.eyebrow }}
+        </span>
+      {% endif %}
 
-      <h1>
-        {{ section.settings.heading }}
-      </h1>
+      {% if section.settings.heading != blank %}
+        <h1>{{ section.settings.heading }}</h1>
+      {% endif %}
 
-      <p>
-        {{ section.settings.text }}
-      </p>
+      {% if section.settings.text != blank %}
+        <p>{{ section.settings.text }}</p>
+      {% endif %}
 
       <div class="hero-buttons">
 
-        <a href="{{ section.settings.button_link }}" class="btn">
-          {{ section.settings.button_label }}
-        </a>
+        {% if section.settings.button_label != blank %}
+          <a
+            href="{{ section.settings.button_link | default: routes.all_products_collection_url }}"
+            class="btn"
+          >
+            {{ section.settings.button_label }}
+          </a>
+        {% endif %}
 
-        <a href="/collections/all" class="btn btn-secondary">
-          Explore
-        </a>
+        {% if section.settings.secondary_button_label != blank %}
+          <a
+            href="{{ routes.all_products_collection_url }}"
+            class="btn btn-secondary"
+          >
+            {{ section.settings.secondary_button_label }}
+          </a>
+        {% endif %}
 
       </div>
 
     </div>
 
-    <div class="hero-image">
+    <div class="hero-media">
 
-      {% if section.settings.image %}
-        {{ section.settings.image | image_url: width: 900 | image_tag }}
+      {% if section.settings.video != blank %}
+
+        {{
+          section.settings.video
+          | video_tag:
+            autoplay: true,
+            loop: true,
+            muted: true,
+            controls: false,
+            playsinline: true,
+            preload: 'metadata',
+            class: 'hero-video'
+        }}
+
+      {% elsif section.settings.image != blank %}
+
+        {{
+          section.settings.image
+          | image_url: width: 1200
+          | image_tag:
+            class: 'hero-image-element',
+            loading: 'eager',
+            widths: '450,700,900,1200',
+            alt: section.settings.heading
+        }}
+
       {% else %}
-        <img src="https://placehold.co/700x800" alt="Beauty Collection">
+
+        {{
+          'hero-apparel-1'
+          | placeholder_svg_tag: 'placeholder-svg hero-placeholder'
+        }}
+
       {% endif %}
 
     </div>
@@ -69,18 +110,29 @@
     {
       "type": "text",
       "id": "button_label",
-      "label": "Button Label",
+      "label": "Primary Button Label",
       "default": "Shop Now"
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button Link"
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_label",
+      "label": "Secondary Button Label",
+      "default": "Explore"
     },
     {
       "type": "image_picker",
       "id": "image",
       "label": "Hero Image"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Hero Video"
     }
   ],
   "presets": [

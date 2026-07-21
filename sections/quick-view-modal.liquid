@@ -1,0 +1,52 @@
+<div
+    id="QuickViewModal"
+    class="quick-view-modal"
+    hidden
+>
+
+    <div
+        id="QuickViewOverlay"
+        class="quick-view-overlay"
+    ></div>
+
+    <div
+        class="quick-view-container"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="QuickViewTitle"
+    >
+
+        <button
+            id="QuickViewClose"
+            class="quick-view-close"
+            type="button"
+            aria-label="Close"
+        >
+
+            &times;
+
+        </button>
+
+        <div
+            id="QuickViewBody"
+            class="quick-view-body"
+        >
+
+            <div class="quick-view-loading">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% schema %}
+{
+    "name": "Quick View Modal",
+    "settings": []
+}
+{% endschema %}

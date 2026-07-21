@@ -1,0 +1,44 @@
+<div id="PredictiveSearch" class="predictive-search">
+
+  <div class="predictive-search-overlay"></div>
+
+  <div class="predictive-search-panel">
+
+    <div class="predictive-search-header">
+
+      <input
+        id="SearchInput"
+        type="search"
+        placeholder="Search products..."
+        autocomplete="off">
+
+      <button
+        id="CloseSearch"
+        type="button">
+
+        ×
+
+      </button>
+
+    </div>
+
+    <div id="PredictiveResults">
+
+      <p class="search-placeholder">
+
+        Start typing to search...
+
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name":"Predictive Search",
+  "settings":[]
+}
+{% endschema %}

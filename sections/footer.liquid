@@ -6,65 +6,90 @@
 
       <div class="footer-brand">
 
-        <h2>NOVE</h2>
+        {% if section.settings.logo != blank %}
+          {{
+            section.settings.logo
+            | image_url: width: 180
+            | image_tag:
+              class: 'footer-logo',
+              loading: 'lazy',
+              alt: shop.name
+          }}
+        {% else %}
+          <h2>{{ shop.name }}</h2>
+        {% endif %}
 
-        <p>
-          Beauty, Naturally.
-        </p>
+        {% if section.settings.tagline != blank %}
+          <p>{{ section.settings.tagline }}</p>
+        {% endif %}
 
-        <p>
-          Premium skincare, makeup, haircare, and fragrance curated for everyday beauty.
-        </p>
-
-      </div>
-
-      <div class="footer-links">
-
-        <h4>Shop</h4>
-
-        <ul>
-          <li><a href="/collections/all">All Products</a></li>
-          <li><a href="/collections/makeup">Makeup</a></li>
-          <li><a href="/collections/skincare">Skincare</a></li>
-          <li><a href="/collections/hair">Hair</a></li>
-          <li><a href="/collections/fragrance">Fragrance</a></li>
-        </ul>
+        {% if section.settings.description != blank %}
+          <p>{{ section.settings.description }}</p>
+        {% endif %}
 
       </div>
 
       <div class="footer-links">
 
-        <h4>Customer Care</h4>
+        <h4>{{ section.settings.shop_heading }}</h4>
 
-        <ul>
-          <li><a href="#">Shipping</a></li>
-          <li><a href="#">Returns</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">FAQs</a></li>
-        </ul>
+        {% if linklists[section.settings.shop_menu] != blank %}
+          <ul>
+            {% for link in linklists[section.settings.shop_menu].links %}
+              <li>
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+      </div>
+
+      <div class="footer-links">
+
+        <h4>{{ section.settings.customer_heading }}</h4>
+
+        {% if linklists[section.settings.customer_menu] != blank %}
+          <ul>
+            {% for link in linklists[section.settings.customer_menu].links %}
+              <li>
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
 
       </div>
 
       <div class="footer-newsletter">
 
-        <h4>Join the Nove Community</h4>
+        <h4>{{ section.settings.newsletter_heading }}</h4>
 
-        <p>
-          Subscribe to receive new arrivals, exclusive offers, and beauty tips.
-        </p>
+        <p>{{ section.settings.newsletter_text }}</p>
 
-        <form>
+        {% form 'customer' %}
+
+          <input
+            type="hidden"
+            name="contact[tags]"
+            value="newsletter"
+          >
 
           <input
             type="email"
+            name="contact[email]"
             placeholder="Email address"
+            required
           >
 
-          <button class="btn">
+          <button
+            type="submit"
+            class="btn"
+          >
             Subscribe
           </button>
 
-        </form>
+        {% endform %}
 
       </div>
 
@@ -73,7 +98,7 @@
     <div class="footer-bottom">
 
       <p>
-        © {{ 'now' | date: "%Y" }} NOVE. All rights reserved.
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
       </p>
 
     </div>
@@ -85,7 +110,59 @@
 {% schema %}
 {
   "name": "Footer",
-  "settings": [],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Beauty, Naturally."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Premium skincare, makeup, haircare, and fragrance curated for everyday beauty."
+    },
+    {
+      "type": "text",
+      "id": "shop_heading",
+      "label": "Shop heading",
+      "default": "Shop"
+    },
+    {
+      "type": "link_list",
+      "id": "shop_menu",
+      "label": "Shop menu"
+    },
+    {
+      "type": "text",
+      "id": "customer_heading",
+      "label": "Customer Care heading",
+      "default": "Customer Care"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_menu",
+      "label": "Customer Care menu"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter heading",
+      "default": "Join the NOVE Community"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Newsletter text",
+      "default": "Subscribe to receive new arrivals, exclusive offers, and beauty tips."
+    }
+  ],
   "presets": [
     {
       "name": "Footer"

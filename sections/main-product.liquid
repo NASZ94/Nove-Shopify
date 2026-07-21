@@ -1,0 +1,399 @@
+<section class="product-page">
+
+  <div class="container">
+
+    <div class="product-layout">
+
+      <!-- ==========================
+           PRODUCT GALLERY
+      ========================== -->
+
+      <div class="product-gallery">
+
+        <div class="product-main-image">
+
+          {% if product.featured_media %}
+
+            {{
+              product.featured_media
+              | image_url: width: 1400
+              | image_tag:
+                id: 'ProductMainImage',
+                loading: 'eager',
+                alt: product.title
+            }}
+
+          {% else %}
+
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+
+          {% endif %}
+
+        </div>
+
+        {% if product.media.size > 1 %}
+
+          <div class="product-thumbnails">
+
+            {% for media in product.media %}
+
+              {% if media.media_type == 'image' %}
+
+                <button
+                  type="button"
+                  class="thumbnail-button{% if media.id == product.featured_media.id %} active{% endif %}"
+                  data-image="{{ media | image_url: width: 1400 }}"
+                  aria-label="View image {{ forloop.index }}">
+
+                  {{
+                    media
+                    | image_url: width: 180
+                    | image_tag:
+                      loading: 'lazy',
+                      alt: media.alt
+                  }}
+
+                </button>
+
+              {% endif %}
+
+            {% endfor %}
+
+          </div>
+
+        {% endif %}
+
+      </div>
+
+      <!-- ==========================
+           PRODUCT INFO
+      ========================== -->
+
+      <div class="product-info">
+
+        {% if product.vendor != blank %}
+          <p class="product-vendor">
+            {{ product.vendor }}
+          </p>
+        {% endif %}
+
+        <h1 class="product-title">
+          {{ product.title }}
+        </h1>
+
+        <div class="rating">
+          ★★★★★
+        </div>
+
+        <div class="product-price">
+
+          <span
+            id="ProductPrice"
+            class="price">
+
+            {{ product.selected_or_first_available_variant.price | money }}
+
+          </span>
+
+          <span
+            id="ComparePrice"
+            class="compare-price"
+            {% unless product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+              style="display:none"
+            {% endunless %}>
+
+            {{ product.selected_or_first_available_variant.compare_at_price | money }}
+
+          </span>
+
+        </div>
+
+        <p
+          id="StockStatus"
+          class="stock-status{% unless product.selected_or_first_available_variant.available %} out{% endunless %}">
+
+          {% if product.selected_or_first_available_variant.available %}
+            ✓ In Stock
+          {% else %}
+            Sold Out
+          {% endif %}
+
+        </p>
+
+        {% form 'product', product %}
+
+          <input
+            type="hidden"
+            id="SelectedVariant"
+            name="id"
+            value="{{ product.selected_or_first_available_variant.id }}">
+
+          <!-- ==========================
+               VARIANTS
+          ========================== -->
+
+          {% unless product.has_only_default_variant %}
+
+            <div class="variant-picker">
+
+              <label>
+                Choose an option
+              </label>
+
+              <div class="variant-buttons">
+
+                {% for variant in product.variants %}
+
+                  <input
+                    type="radio"
+                    id="Variant-{{ variant.id }}"
+                    name="variant-selector"
+                    value="{{ variant.id }}"
+                    {% if variant == product.selected_or_first_available_variant %}
+                      checked
+                    {% endif %}
+                    {% unless variant.available %}
+                      disabled
+                    {% endunless %}>
+
+                  <label
+                    class="variant-button"
+                    for="Variant-{{ variant.id }}">
+
+                    {{ variant.title }}
+
+                  </label>
+
+                {% endfor %}
+
+              </div>
+
+            </div>
+
+          {% endunless %}
+
+          <!-- ==========================
+               QUANTITY
+          ========================== -->
+
+          <div class="quantity-wrapper">
+
+            <label for="Quantity">
+
+              Quantity
+
+            </label>
+
+            <div class="quantity-selector">
+
+              <button
+                type="button"
+                class="qty-btn qty-minus"
+                aria-label="Decrease quantity">
+
+                −
+
+              </button>
+
+              <input
+                id="Quantity"
+                type="number"
+                name="quantity"
+                min="1"
+                value="1">
+
+              <button
+                type="button"
+                class="qty-btn qty-plus"
+                aria-label="Increase quantity">
+
+                +
+
+              </button>
+
+            </div>
+
+          </div>
+
+<!-- ==========================
+     BUTTONS
+========================== -->
+
+<div class="product-actions">
+
+  <button
+    id="AddToCartButton"
+    type="submit"
+    class="btn"
+    {% unless product.selected_or_first_available_variant.available %}
+      disabled
+    {% endunless %}>
+
+    {% if product.selected_or_first_available_variant.available %}
+      Add to Cart
+    {% else %}
+      Sold Out
+    {% endif %}
+
+  </button>
+
+  <button
+    class="wishlist-button"
+    data-product-handle="{{ product.handle }}"
+    aria-label="Add to wishlist"
+    aria-pressed="false"
+    type="button">
+
+    ♡
+
+  </button>
+
+</div>
+
+{{ form | payment_button }}
+
+<script
+  id="ProductVariants"
+  type="application/json">
+
+  {{ product.variants | json }}
+
+</script>
+
+{% endform %}
+
+
+
+ <!-- ==========================
+     SHIPPING INFO
+========================== -->
+
+        <div class="shipping-info">
+
+          <p>🚚 Free shipping on orders over $50</p>
+
+          <p>↩ Easy 30-day returns</p>
+
+          <p>🔒 Secure checkout</p>
+
+        </div>
+
+        <!-- ==========================
+             PRODUCT ACCORDIONS
+        ========================== -->
+
+        <div class="product-accordion">
+
+          <details open>
+
+            <summary>
+
+              Description
+
+              <span>+</span>
+
+            </summary>
+
+            <div class="accordion-content">
+
+              {{ product.description }}
+
+            </div>
+
+          </details>
+
+          <details>
+
+            <summary>
+
+              Ingredients
+
+              <span>+</span>
+
+            </summary>
+
+            <div class="accordion-content">
+
+              {% if product.metafields.custom.ingredients != blank %}
+
+                {{ product.metafields.custom.ingredients | metafield_tag }}
+
+              {% else %}
+
+                <p>Ingredients information coming soon.</p>
+
+              {% endif %}
+
+            </div>
+
+          </details>
+
+          <details>
+
+            <summary>
+
+              How to Use
+
+              <span>+</span>
+
+            </summary>
+
+            <div class="accordion-content">
+
+              {% if product.metafields.custom.how_to_use != blank %}
+
+                {{ product.metafields.custom.how_to_use | metafield_tag }}
+
+              {% else %}
+
+                <p>Usage instructions coming soon.</p>
+
+              {% endif %}
+
+            </div>
+
+          </details>
+
+          <details>
+
+            <summary>
+
+              Shipping & Returns
+
+              <span>+</span>
+
+            </summary>
+
+            <div class="accordion-content">
+
+              <p>Free shipping on orders over $50.</p>
+
+              <p>Orders ship within 1–2 business days.</p>
+
+              <p>30-day hassle-free returns.</p>
+
+            </div>
+
+          </details>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Main Product",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Main Product"
+    }
+  ]
+}
+{% endschema %}

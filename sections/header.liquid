@@ -72,6 +72,23 @@
       </a>
 
       <a
+        href="/pages/wishlist"
+        class="icon-btn header-wishlist"
+        aria-label="Wishlist">
+
+        Wishlist
+
+        <span
+          id="WishlistCount"
+          class="wishlist-count">
+
+          0
+
+        </span>
+
+      </a>
+
+      <a
         href="{{ routes.cart_url }}"
         class="icon-btn"
         aria-label="Cart">
@@ -79,9 +96,13 @@
         Cart
 
         {% if cart.item_count > 0 %}
+
           <span class="cart-count">
+
             {{ cart.item_count }}
+
           </span>
+
         {% endif %}
 
       </a>
