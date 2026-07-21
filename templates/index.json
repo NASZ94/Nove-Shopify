@@ -5,10 +5,18 @@
     },
     "categories": {
       "type": "categories"
+    },
+    "best_sellers": {
+      "type": "best-sellers"
+    },
+    "why_nove": {
+      "type": "why-nove"
     }
   },
   "order": [
     "hero",
-    "categories"
+    "categories",
+    "best_sellers",
+    "why_nove"
   ]
 }
