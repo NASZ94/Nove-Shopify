@@ -914,16 +914,27 @@ button{
    COLLECTION LAYOUT
 ================================================== */
 
-.collection-layout {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 50px;
+.collection-layout{
+    display:grid;
+    grid-template-columns:280px minmax(0,1fr);
+    gap:40px;
+    align-items:start;
 }
 
-.collection-sidebar {
-    position: sticky;
-    top: 120px;
-    align-self: start;
+.collection-sidebar{
+    position:sticky;
+    top:120px;
+    align-self:start;
+}
+
+.collection-products{
+    min-width:0;
+}
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:32px;
 }
 
 /* ==================================================
