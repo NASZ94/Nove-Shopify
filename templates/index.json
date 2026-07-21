@@ -2,9 +2,13 @@
   "sections": {
     "hero": {
       "type": "hero"
+    },
+    "categories": {
+      "type": "categories"
     }
   },
   "order": [
-    "hero"
+    "hero",
+    "categories"
   ]
 }
