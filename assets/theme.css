@@ -993,12 +993,6 @@ button{
    PRODUCT GRID
 ================================================== */
 
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 35px;
-}
-
 .product-card {
     border: 1px solid #eee;
     background: #fff;
