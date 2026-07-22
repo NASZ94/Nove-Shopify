@@ -733,22 +733,34 @@ document.addEventListener("click", async (event) => {
 
                         <button
                             id="QuickViewAddToCart"
-                            class="button"
-                            ${currentVariant.available ? "" : "disabled"}>
+                             class="button"
+                             ${currentVariant.available ? "" : "disabled"}>
 
-                            ${currentVariant.available ? "Add to Cart" : "Sold Out"}
+                             ${currentVariant.available ? "Add to Cart" : "Sold Out"}
 
-                        </button>
+                         </button>
 
-                        <a
-                            href="/products/${handle}"
+                         <a
+                             href="/products/${handle}"
                             class="button button-secondary">
 
                             View Product
 
                          </a>
 
-                     </div>
+                    </div>
+
+                    <div class="quick-view-trust">
+
+                        <div>🚚 Free Shipping</div>
+
+                        <div>🔒 Secure Checkout</div>
+
+                        <div>↩ 30-Day Returns</div>
+
+                    </div>
+
+                    </div>
 
             </div>
         `;
@@ -859,10 +871,11 @@ document.addEventListener("click", async (event) => {
 
         console.error(error);
 
-        quickViewBody.innerHTML = `
-            <p>
+       quickViewBody.innerHTML = `
+           <p>
                 Unable to load product.
-            </p>
+          </p>
+        
         `;
 
     }
