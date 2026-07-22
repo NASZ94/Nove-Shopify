@@ -1155,39 +1155,6 @@ function updateWishlistButtons() {
 
 }
 
-document.addEventListener("click", async (event) => {
-
-    const button =
-        event.target.closest(".wishlist-button");
-
-    if (!button) return;
-
-    const handle =
-        button.dataset.productHandle;
-
-    if (!handle) return;
-
-    let wishlist =
-        getWishlist();
-
-    if (wishlist.includes(handle)) {
-
-        wishlist =
-            wishlist.filter(item => item !== handle);
-
-    } else {
-
-        wishlist.unshift(handle);
-
-    }
-
-    saveWishlist(wishlist);
-
-    updateWishlistButtons();
-
-    renderWishlist();
-
-});
 
 async function renderWishlist() {
 
