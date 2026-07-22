@@ -153,10 +153,7 @@ if (variantJSON) {
 
             if (price) {
 
-                price.innerHTML = Shopify.formatMoney(
-                    variant.price,
-                    window.Shopify.money_format
-                );
+                price.innerHTML = formatMoney(variant.price);
 
             }
 
@@ -171,9 +168,8 @@ if (variantJSON) {
 
                     comparePrice.style.display = "";
 
-                    comparePrice.innerHTML = Shopify.formatMoney(
-                        variant.compare_at_price,
-                        window.Shopify.money_format
+                    comparePrice.innerHTML = formatMoney(
+                        variant.compare_at_price
                     );
 
                 } else {
@@ -320,10 +316,7 @@ if (variantJSON) {
         if (!container || !subtotal) return;
 
         subtotal.innerHTML =
-            Shopify.formatMoney(
-                cart.total_price,
-                window.Shopify.money_format
-            );
+            formatMoney(cart.total_price);
 
         if (cart.item_count === 0) {
 
@@ -351,7 +344,7 @@ if (variantJSON) {
 
                         <h4>${item.product_title}</h4>
 
-                        <p>${Shopify.formatMoney(item.final_price, window.Shopify.money_format)}</p>
+                        <p>${formatMoney(item.final_price)}</p>
 
                         <div class="cart-qty">
 
@@ -664,10 +657,7 @@ document.addEventListener("click", async (event) => {
                         id="QuickViewPrice"
                     >
 
-                        ${Shopify.formatMoney(
-                            currentVariant.price,
-                            window.Shopify.money_format
-                        )}
+                       ${formatMoney(currentVariant.price)}
 
                     </p>
 
@@ -789,10 +779,8 @@ document.addEventListener("click", async (event) => {
 
                 if (!currentVariant) return;
 
-                priceElement.innerHTML = Shopify.formatMoney(
-                    currentVariant.price,
-                    window.Shopify.money_format
-                );
+                priceElement.innerHTML =
+                    formatMoney(currentVariant.price);
 
                 addButton.disabled = !currentVariant.available;
 
@@ -1063,10 +1051,7 @@ async function renderRecentlyViewed(handles) {
 
                         <div class="product-price">
 
-                            ${Shopify.formatMoney(
-                                variant.price,
-                                window.Shopify.money_format
-                            )}
+                            ${formatMoney(variant.price)}
 
                         </div>
 
@@ -1304,10 +1289,7 @@ async function renderWishlist() {
 
                         <div class="product-price">
 
-                            ${Shopify.formatMoney(
-                                variant.price,
-                                window.Shopify.money_format
-                            )}
+                            ${formatMoney(variant.price)}
 
                         </div>
 
