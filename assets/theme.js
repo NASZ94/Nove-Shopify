@@ -607,6 +607,8 @@ document.addEventListener("click", async (event) => {
 
     const handle = button.dataset.productHandle;
 
+    console.log("Quick View handle:", handle);
+
     if (!handle) return;
 
     openQuickView();
@@ -619,7 +621,11 @@ document.addEventListener("click", async (event) => {
 
     try {
 
+        console.log("Fetching:", `/products/${handle}.js`);
+
         const response = await fetch(`/products/${handle}.js`);
+
+        console.log("Status:", response.status);
 
         if (!response.ok) {
             throw new Error("Unable to load product.");
