@@ -965,3 +965,143 @@ button{
     opacity: 1;
     transform: scale(1.05);
 }
+/* ==================================================
+   PRODUCT PAGE
+================================================== */
+
+.product-page{
+    padding:60px 0;
+}
+
+.product-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:start;
+}
+
+.product-gallery{
+    width:100%;
+}
+
+.product-main-image{
+    width:100%;
+    aspect-ratio:1/1;
+    background:#fff;
+    border:1px solid #ececec;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.product-main-image img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+}
+
+.product-thumbnails{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.thumbnail-button{
+    width:80px;
+    height:80px;
+    padding:0;
+    border:1px solid #ddd;
+    border-radius:12px;
+    overflow:hidden;
+    background:#fff;
+    cursor:pointer;
+}
+
+.thumbnail-button img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.product-info{
+    min-width:0;
+}
+
+.variant-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:12px;
+}
+
+.variant-buttons input{
+    display:none;
+}
+
+.variant-button{
+    padding:10px 16px;
+    border:1px solid #ddd;
+    border-radius:999px;
+    cursor:pointer;
+}
+
+.variant-buttons input:checked + .variant-button{
+    background:#2D2623;
+    color:#fff;
+    border-color:#2D2623;
+}
+
+.quantity-selector{
+    display:flex;
+    align-items:center;
+    width:140px;
+}
+
+.qty-btn{
+    width:40px;
+    height:40px;
+    border:1px solid #ddd;
+    background:#fff;
+    cursor:pointer;
+}
+
+.quantity-selector input{
+    width:60px;
+    text-align:center;
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+    border-left:none;
+    border-right:none;
+}
+
+.product-accordion{
+    margin-top:40px;
+}
+
+.product-accordion details{
+    border-top:1px solid #eee;
+    padding:18px 0;
+}
+
+.product-accordion summary{
+    cursor:pointer;
+    font-weight:600;
+    list-style:none;
+    display:flex;
+    justify-content:space-between;
+}
+
+.accordion-content{
+    margin-top:16px;
+    color:#666;
+}
+
+@media (max-width:900px){
+
+    .product-layout{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+
+}
