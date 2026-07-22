@@ -1100,8 +1100,10 @@ button{
 @media (max-width:900px){
 
     .product-layout{
-        grid-template-columns:1fr;
-        gap:40px;
-    }
+        display:grid;
+        grid-template-columns:55% 45%;
+        gap:50px;
+        align-items:start;
+}
 
 }
